@@ -24,7 +24,7 @@ import com.qonect.protocols.mqtt.service.MqttService.ConnectionStatus;
 public class MqttTestActivity extends Activity implements MessageHandler, StatusHandler
 {	
 	private static final Logger LOG = Logger.getLogger(MqttTestActivity.class);
-	
+
 	private MessageReceiver msgReceiver;
 	private StatusReceiver statusReceiver;
 	
@@ -32,7 +32,9 @@ public class MqttTestActivity extends Activity implements MessageHandler, Status
 	
 	private EditText publishEditView;
 	private Button publishButton;
-	
+
+	private static String chatMessage = new String();
+
 	@Override  
 	public void onCreate(Bundle savedInstanceState)   
 	{  
@@ -119,12 +121,14 @@ public class MqttTestActivity extends Activity implements MessageHandler, Status
 	@Override
 	public void handleMessage(String topic, byte[] payload) {
 		String message = new String(payload);
-		
+		chatMessage += "\n" + new String(payload);
+
 		LOG.debug("handleMessage: topic="+topic+", message="+message);
 				
-		if(timestampView != null)timestampView.setText("When: "+getCurrentTimestamp());
+		//if(timestampView != null)timestampView.setText("When: "+getCurrentTimestamp());
 		if(topicView != null)topicView.setText("Topic: "+topic);
-		if(messageView != null)messageView.setText("Message: "+message);
+		//if(messageView != null)messageView.setText("Message: "+message);
+		if(chatMessage != null)messageView.setText("Chat: " + chatMessage);
 	}	
 
 	@Override
